@@ -1,17 +1,14 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Toaster } from 'sonner';
-import { Providers } from './lib/providers';
+import './globals.css';
+import { Providers } from './providers';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Portfolio',
-    template: '%s | Portfolio',
-  },
-  description: 'Kişisel portfolyo ve blog sitesi',
+  title: 'Burak - Frontend Developer',
+  description: 'Frontend Developer Portfolio',
 };
 
 export default function RootLayout({
@@ -20,12 +17,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="tr" suppressHydrationWarning>
+    <html lang="tr" className="scroll-smooth">
       <body className={inter.className}>
-        <Providers>
-          {children}
-          <Toaster />
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

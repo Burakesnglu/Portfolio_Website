@@ -8,17 +8,17 @@ const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Type for the projects table
-export type Project = {
+export interface Project {
   id: string;
   created_at: string;
   updated_at: string;
   title: string;
-  description: string | null;
-  image_url: string | null;
-  project_url: string | null;
-  github_url: string | null;
+  description: string;
+  image_url: string;
+  project_url: string;
+  github_url?: string;
   technologies: string[];
   featured: boolean;
-  order: number | null;
-  category: string | null;
-}; 
+  order: number;
+  category: string;
+} 

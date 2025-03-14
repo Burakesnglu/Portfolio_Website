@@ -1,96 +1,99 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useTheme } from 'next-themes';
+import { Moon, Sun } from 'lucide-react';
+import { Button } from '@/app/components/ui/button';
+import { motion, useScroll } from 'framer-motion';
 import { cn } from '@/app/lib/utils';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
 
-const navItems = [
-  { name: 'Home', path: '/' },
-  { name: 'Projects', path: '/projects' },
-  { name: 'About', path: '/about' },
-  { name: 'Contact', path: '/contact' },
+const navigation = [
+  { name: 'Hakkımda', href: '#about' },
+  { name: 'Projeler', href: '#projects' },
+  { name: 'İletişim', href: '#contact' },
 ];
 
 export default function Header() {
-  const pathname = usePathname();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const { scrollY } = useScroll();
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    return scrollY.onChange((latest) => {
+      setIsScrolled(latest > 0);
+    });
+  }, [scrollY]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
-        <Link href="/" className="flex items-center space-x-2">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="font-bold text-xl"
-          >
-            Portfolio
-          </motion.div>
+    <motion.header
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.3 }}
+      className={cn(
+        'fixed top-0 z-50 w-full transition-all duration-300',
+        isScrolled
+          ? 'border-b bg-background/80 backdrop-blur-lg'
+          : 'bg-transparent'
+      )}
+    >
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        <Link
+          href="/"
+          className="bg-gradient-to-r from-foreground to-foreground/60 bg-clip-text text-xl font-bold text-transparent"
+        >
+          Portfolio
         </Link>
 
-        {/* Desktop navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
-              className={cn(
-                'text-sm font-medium transition-colors hover:text-primary',
-                pathname === item.path
-                  ? 'text-foreground'
-                  : 'text-foreground/60'
-              )}
-            >
-              {item.name}
-            </Link>
-          ))}
+        <nav className="hidden md:block">
+          <ul className="flex space-x-8">
+            {navigation.map((item) => (
+              <li key={item.name}>
+                <Link
+                  href={item.href}
+                  className="group relative text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                >
+                  {item.name}
+                  <span className="absolute -bottom-2 left-0 h-0.5 w-0 bg-gradient-to-r from-purple-500 to-blue-500 transition-all group-hover:w-full" />
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        {/* Mobile menu button */}
-        <button
-          className="md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+          className="relative h-9 w-9 overflow-hidden rounded-full"
         >
-          {mobileMenuOpen ? (
-            <X className="h-6 w-6" />
-          ) : (
-            <Menu className="h-6 w-6" />
-          )}
-        </button>
-      </div>
-
-      {/* Mobile navigation */}
-      {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden border-t border-border/40"
-        >
-          <div className="container py-4 space-y-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.path}
-                href={item.path}
-                className={cn(
-                  'block text-sm font-medium transition-colors hover:text-primary',
-                  pathname === item.path
-                    ? 'text-foreground'
-                    : 'text-foreground/60'
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
+          <div className="absolute inset-0 flex items-center justify-center">
+            {mounted ? (
+              theme === 'dark' ? (
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Sun className="h-4 w-4" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <Moon className="h-4 w-4" />
+                </motion.div>
+              )
+            ) : null}
           </div>
-        </motion.div>
-      )}
-    </header>
+        </Button>
+      </div>
+    </motion.header>
   );
 } 
