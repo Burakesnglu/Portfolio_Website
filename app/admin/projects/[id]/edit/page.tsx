@@ -1,5 +1,5 @@
 import { createServerSupabaseClient } from '@/app/lib/auth';
-import { ProjectForm } from '@/app/components/forms/project-form';
+import { ProjectForm } from '@/app/components/forms/ProjectForm';
 import { notFound } from 'next/navigation';
 
 interface EditProjectPageProps {

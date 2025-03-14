@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { createServerSupabaseClient } from '@/app/lib/auth';
-import { ProjectList } from '@/app/components/projects/project-list';
+import { ProjectList } from '@/app/components/projects/ProjectTable';
 import { Button } from '@/app/components/ui/button';
 import { Plus } from 'lucide-react';
 

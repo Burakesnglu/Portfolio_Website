@@ -1,6 +1,6 @@
 import { getUser } from '@/app/lib/auth';
 import { redirect } from 'next/navigation';
-import { AdminHeader } from '@/app/components/layout/admin-header';
+import { AdminHeader } from '@/app/components/layout/AdminHeader';
 
 export default async function AdminLayout({
   children,
