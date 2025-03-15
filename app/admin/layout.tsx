@@ -1,6 +1,7 @@
-import { getUser } from '../../lib/auth';
-import { redirect } from 'next/navigation';
-import { AdminHeader } from '../../components/layout/AdminHeader';
+import { redirect } from "next/navigation";
+import { getUser } from "../lib/auth";
+import { AdminHeader } from "../components/layout/AdminHeader";
+
 
 // Bu dosya dinamik olmalı, statik olarak oluşturulmamalı
 export const dynamic = 'force-dynamic';

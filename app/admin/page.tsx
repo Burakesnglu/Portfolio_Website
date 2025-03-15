@@ -1,7 +1,5 @@
 import { getUser } from '@/app/lib/auth';
-import { createServerSupabaseClient } from '@/app/lib/auth';
-import Link from 'next/link';
-import { Plus, FileText, Settings, Users } from 'lucide-react';
+import { createServerSupabaseClient } from '@/app/lib/auth'; 
 
 export const metadata = {
   title: 'Admin Dashboard',
