@@ -2,15 +2,15 @@ import { z } from 'zod';
 
 // Project form validation schema
 export const projectSchema = z.object({
-  title: z.string().min(1, 'Proje başlığı gereklidir'),
-  description: z.string().optional(),
-  image_url: z.string().url('Geçerli bir URL giriniz').optional().nullable(),
-  project_url: z.string().url('Geçerli bir URL giriniz').optional().nullable(),
-  github_url: z.string().url('Geçerli bir URL giriniz').optional().nullable(),
+  title: z.string().min(1, 'Başlık zorunludur'),
+  description: z.string().nullable(),
+  images: z.array(z.string().url('Geçerli bir URL giriniz')),
+  project_url: z.string().url('Geçerli bir URL giriniz').nullable(),
+  github_url: z.string().url('Geçerli bir URL giriniz').nullable(),
   technologies: z.array(z.string()),
-  featured: z.boolean().default(false),
-  order: z.number().optional().nullable(),
-  category: z.string().optional().nullable(),
+  featured: z.boolean(),
+  order: z.number().nullable(),
+  category: z.string().nullable(),
 });
 
 export type ProjectFormData = z.infer<typeof projectSchema>;

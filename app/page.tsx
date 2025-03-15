@@ -4,10 +4,10 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import { Providers } from './providers';
 import Header from './components/layout/Header'; 
-import About from './components/sections/about';
-import { Contact } from 'lucide-react';
+import About from './components/sections/about'; 
 import Hero from './components/sections/hero';
 import Projects from './components/sections/projects';
+import Contact from './components/sections/Contact';
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();

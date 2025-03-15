@@ -13,12 +13,12 @@ export interface Project {
   created_at: string;
   updated_at: string;
   title: string;
-  description: string;
-  image_url: string;
-  project_url: string;
-  github_url?: string;
+  description: string | null;
+  images: string[];
+  project_url: string | null;
+  github_url: string | null;
   technologies: string[];
   featured: boolean;
-  order: number;
-  category: string;
+  order: number | null;
+  category: string | null;
 } 
