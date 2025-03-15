@@ -14,6 +14,7 @@ export default function HomePage() {
     restDelta: 0.001,
   });
 
+  
   return (
     <Providers>
       <ThemeProvider attribute="class" defaultTheme="dark">
