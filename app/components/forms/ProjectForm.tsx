@@ -1,18 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { Button } from '@/app/components/ui/button';
-import { Input } from '@/app/components/ui/input';
-import { Label } from '@/app/components/ui/label';
-import { Textarea } from '@/app/components/ui/textarea';
-import { Switch } from '@/app/components/ui/switch';
-import { projectSchema, type ProjectFormData } from '@/app/lib/validators';
-import type { Project } from '@/app/lib/supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+import { Button, Input, Label, Textarea, Switch } from '../ui';
+import { projectSchema, type ProjectFormData } from '../../lib/validators';
+import type { Project } from '../../lib/supabase';
 import { Loader2 } from 'lucide-react';
-import type { Database } from '@/app/lib/database.types';
+import type { Database } from '../../lib/database.types';
 
 interface ProjectFormProps {
   project?: Project;

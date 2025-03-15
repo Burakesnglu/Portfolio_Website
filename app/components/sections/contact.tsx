@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, MessageSquare, Send } from 'lucide-react';
-import { Button } from '../../components/ui/button';
+import { Button } from '../ui';
 import Link from 'next/link';
 import { toast } from 'sonner';
 

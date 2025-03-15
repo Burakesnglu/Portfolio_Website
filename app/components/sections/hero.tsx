@@ -1,7 +1,7 @@
 'use client';
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
-import { Button } from '../../components/ui/button';
+import { Button } from '../ui';
 import { ChevronDown, Github, Linkedin, Mail, Code2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useEffect } from 'react';
