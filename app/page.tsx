@@ -3,11 +3,11 @@
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { ThemeProvider } from 'next-themes';
 import { Providers } from './providers';
-import Header from './components/layout/Header';  
-import Hero from './components/sections/Hero';
-import About from './components/sections/About';
-import Projects from './components/sections/Projects';
-import Contact from './components/sections/Contact';
+import Header from '@/app/components/layout/Header';  
+import Hero from '@/app/components/sections/Hero';
+import About from '@/app/components/sections/About';
+import Projects from '@/app/components/sections/Projects';
+import Contact from '@/app/components/sections/Contact';
 
 export default function HomePage() {
   const { scrollYProgress } = useScroll();
