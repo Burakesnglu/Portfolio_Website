@@ -1,5 +1,6 @@
 {
   "buildCommand": "npm run vercel-build",
   "outputDirectory": ".next",
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "regions": ["iad1"]
 } 

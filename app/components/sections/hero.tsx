@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'fram
 import { Button } from '../ui';
 import { ChevronDown, Github, Linkedin, Mail, Code2, Sparkles } from 'lucide-react';
 import Link from 'next/link';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 
 const socialLinks = [
   {
@@ -35,6 +35,7 @@ export default function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -44,23 +45,42 @@ export default function Hero() {
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
   
-  const rotateX = useSpring(useTransform(mouseY, [0, window?.innerHeight], [15, -15]), {
+  const rotateX = useSpring(useTransform(mouseY, [0, windowSize.height || 1], [15, -15]), {
     stiffness: 100,
     damping: 30,
   });
-  const rotateY = useSpring(useTransform(mouseX, [0, window?.innerWidth], [-15, 15]), {
+  const rotateY = useSpring(useTransform(mouseX, [0, windowSize.width || 1], [-15, 15]), {
     stiffness: 100,
     damping: 30,
   });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
+    if (typeof window !== 'undefined') {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+      const handleResize = () => {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      };
+
+      const handleMouseMove = (e: MouseEvent) => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      };
+
+      window.addEventListener('resize', handleResize);
+      window.addEventListener('mousemove', handleMouseMove);
+      
+      return () => {
+        window.removeEventListener('resize', handleResize);
+        window.removeEventListener('mousemove', handleMouseMove);
+      };
+    }
   }, [mouseX, mouseY]);
 
   return (

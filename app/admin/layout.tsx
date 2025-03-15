@@ -1,6 +1,9 @@
-import { getUser } from '@/app/lib/auth';
+import { getUser } from '../../lib/auth';
 import { redirect } from 'next/navigation';
-import { AdminHeader } from '@/app/components/layout/AdminHeader';
+import { AdminHeader } from '../../components/layout/AdminHeader';
+
+// Bu dosya dinamik olmalı, statik olarak oluşturulmamalı
+export const dynamic = 'force-dynamic';
 
 export default async function AdminLayout({
   children,

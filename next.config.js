@@ -28,6 +28,12 @@ const nextConfig = {
     // Hataları görmezden gel, sadece uyarıları göster
     ignoreDuringBuilds: true,
   },
+  // ISR ve SSG davranışını konfigüre edelim
+  experimental: {
+    // Bu seçenek, Next.js'nin tarayıcı API'larını server tarafında 
+    // kullanırken hata vermesini engeller, sadece uyarı gösterir
+    appDocumentPreloading: false,
+  },
 };
 
 module.exports = nextConfig; 

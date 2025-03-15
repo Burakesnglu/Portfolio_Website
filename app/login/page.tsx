@@ -1,6 +1,9 @@
-import { LoginForm } from '@/app/components/forms/LoginForm';
-import { getUser } from '@/app/lib/auth';
+import { LoginForm } from '../components/forms/LoginForm';
+import { getUser } from '../lib/auth';
 import { redirect } from 'next/navigation';
+
+// Bu sayfa dinamik olmalı
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Giriş Yap',
