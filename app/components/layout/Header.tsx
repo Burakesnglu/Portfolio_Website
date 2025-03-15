@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useTheme } from 'next-themes';
-import { Moon, Sun } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
 import { motion, useScroll } from 'framer-motion';
-import { cn } from '@/app/lib/utils';
+import { Menu, X, Moon, Sun } from 'lucide-react';
+import { Button } from '../../components/ui/button';
+import { useTheme } from 'next-themes';
+import { cn } from '../../lib/utils';
 
 const navigation = [
   { name: 'Hakkımda', href: '#about' },

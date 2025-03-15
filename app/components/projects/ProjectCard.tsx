@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Project } from '@/app/lib/supabase';
-import { truncateText } from '@/app/lib/utils';
+import { Project } from '../../lib/supabase';
+import { truncateText } from '../../lib/utils';
 
 interface ProjectCardProps {
   project: Project;

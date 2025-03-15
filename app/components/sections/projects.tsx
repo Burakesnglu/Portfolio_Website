@@ -3,12 +3,12 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, Globe, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/app/components/ui/button';
+import { Button } from '../../components/ui/button';
 import Link from 'next/link';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useQuery } from '@tanstack/react-query';
-import { Skeleton } from '@/app/components/ui/skeleton';
-import type { Project } from '@/app/lib/supabase';
+import { Skeleton } from '../../components/ui/skeleton';
+import type { Project } from '../../lib/supabase';
 
 async function getProjects() {
   const supabase = createClientComponentClient();
