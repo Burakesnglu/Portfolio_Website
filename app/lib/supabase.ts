@@ -15,6 +15,7 @@ export interface Project {
   title: string;
   description: string | null;
   images: string[];
+  image_url?: string | null; // Ana görsel URL'si (opsiyonel)
   project_url: string | null;
   github_url: string | null;
   technologies: string[];

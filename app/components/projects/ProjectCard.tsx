@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
+import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Project } from '../../lib/supabase';
-import { truncateText } from '../../lib/utils';
+import { Github, ExternalLink, ChevronLeft, ChevronRight, Calendar, Layers } from 'lucide-react';
+import { Button, Badge } from '../ui';
+import Link from 'next/link';
+import Image from 'next/image';
+import type { Project } from '../../lib/supabase';
 
 interface ProjectCardProps {
   project: Project;
@@ -14,91 +15,73 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imageError, setImageError] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const images = project.images || [];
-
-  useEffect(() => {
-    // Log the image URLs for debugging
-    console.log(`Project "${project.title}" Images:`, images);
-  }, [images, project.title]);
-
-  // Otomatik slayt geçişi
-  useEffect(() => {
-    if (images.length <= 1 || isHovering) return;
-
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000); // Her 5 saniyede bir geçiş
-
-    return () => clearInterval(interval);
-  }, [images.length, isHovering]);
+  
+  // Ensure images is always an array
+  const images = Array.isArray(project.images) 
+    ? project.images 
+    : [];
+  
+  // Add image_url to images array if it exists and not already included
+  const allImages = project.image_url && !images.includes(project.image_url)
+    ? [project.image_url, ...images].filter(Boolean)
+    : images.filter(Boolean);
 
   const nextImage = useCallback(() => {
-    if (images.length <= 1) return;
-    setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    console.log(`Moving to next image: ${currentImageIndex + 1} of ${images.length}`);
-  }, [images.length, currentImageIndex]);
+    if (allImages.length <= 1) return;
+    setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+  }, [allImages.length]);
 
   const prevImage = useCallback(() => {
-    if (images.length <= 1) return;
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
-    console.log(`Moving to previous image: ${currentImageIndex - 1 < 0 ? images.length - 1 : currentImageIndex - 1} of ${images.length}`);
-  }, [images.length, currentImageIndex]);
+    if (allImages.length <= 1) return;
+    setCurrentImageIndex((prev) => (prev - 1 + allImages.length) % allImages.length);
+  }, [allImages.length]);
 
-  const handleImageError = () => {
-    console.error('Image load error:', {
-      projectTitle: project.title,
-      imageIndex: currentImageIndex,
-      imageUrl: images[currentImageIndex]
-    });
-    setImageError(true);
-  };
-
-  // URL'yi düzeltmek için yardımcı fonksiyon
-  const getImageUrl = (url: string | undefined): string => {
-    if (!url) return '';
-    return url;
-  };
-
-  const currentImage = images[currentImageIndex];
-  const imageUrl = getImageUrl(currentImage);
+  // Format date if available
+  const formattedDate = project.created_at 
+    ? new Date(project.created_at).toLocaleDateString('tr-TR', { year: 'numeric', month: 'short' })
+    : null;
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, delay: index * 0.1 }}
-      className="group relative overflow-hidden rounded-lg border border-border/40 bg-card text-card-foreground shadow-sm hover:shadow-md transition-all"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -5 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      viewport={{ once: true, margin: "-100px" }}
+      className="group relative overflow-hidden rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm shadow-sm hover:border-border/60 hover:shadow-md transition-all duration-300"
     >
-      <div className="relative h-48 w-full overflow-hidden">
-        {imageUrl && !imageError ? (
+      {/* Project Image */}
+      <div className="relative aspect-video overflow-hidden">
+        {allImages && allImages.length > 0 ? (
           <>
-            <div className="relative h-full w-full">
-              <AnimatePresence initial={false} mode="wait">
-                <motion.img
-                  key={currentImageIndex}
-                  src={imageUrl}
-                  alt={`${project.title} - Image ${currentImageIndex + 1}`}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  onError={handleImageError}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
+            <AnimatePresence initial={false} mode="wait">
+              <motion.div
+                key={currentImageIndex}
+                className="h-full w-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <Image
+                  src={allImages[currentImageIndex]}
+                  alt={project.title}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                  unoptimized // If using external URLs
                 />
-              </AnimatePresence>
-            </div>
-            {images.length > 1 && (
-              <div className="absolute inset-0 flex items-center justify-between px-2">
+              </motion.div>
+            </AnimatePresence>
+            
+            {allImages.length > 1 && (
+              <div className="absolute inset-0 flex items-center justify-between px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
                     prevImage();
                   }}
-                  className="p-1.5 rounded-full bg-white/80 text-black shadow-md hover:bg-white z-10 transition-all"
+                  className="p-2 rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm z-10 transition-all"
                   aria-label="Previous image"
                 >
                   <ChevronLeft className="h-4 w-4" />
@@ -108,16 +91,17 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                     e.preventDefault();
                     nextImage();
                   }}
-                  className="p-1.5 rounded-full bg-white/80 text-black shadow-md hover:bg-white z-10 transition-all"
+                  className="p-2 rounded-full bg-background/80 text-foreground shadow-sm backdrop-blur-sm z-10 transition-all"
                   aria-label="Next image"
                 >
                   <ChevronRight className="h-4 w-4" />
                 </button>
               </div>
             )}
-            {images.length > 1 && (
+            
+            {allImages.length > 1 && (
               <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
-                {images.map((_, idx) => (
+                {allImages.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={(e) => {
@@ -134,79 +118,85 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
                 ))}
               </div>
             )}
-            {images.length === 1 && (
-              <div className="absolute bottom-2 right-2 z-10 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full">
-                1/1
-              </div>
-            )}
           </>
         ) : (
           <div className="flex h-full w-full items-center justify-center bg-muted">
-            <span className="text-muted-foreground">No image</span>
+            <span className="text-muted-foreground">Resim yok</span>
           </div>
         )}
-        {project.featured && (
-          <div className="absolute top-2 right-2 bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full z-10 shadow-sm">
-            Featured
-          </div>
-        )}
-      </div>
-      
-      <div className="p-4">
-        <div className="flex items-center justify-between">
-          <h3 className="text-lg font-semibold">{project.title}</h3>
-          <div className="flex space-x-2">
-            {project.github_url && (
-              <a
-                href={project.github_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Github className="h-4 w-4" />
-                <span className="sr-only">GitHub</span>
-              </a>
-            )}
-            {project.project_url && (
-              <a
-                href={project.project_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ExternalLink className="h-4 w-4" />
-                <span className="sr-only">Live Demo</span>
-              </a>
-            )}
-          </div>
+        
+        {/* Badge and date overlay */}
+        <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-start z-10">
+          {project.category && (
+            <Badge variant="secondary" className="bg-background/80 backdrop-blur-sm">
+              {project.category}
+            </Badge>
+          )}
+          {formattedDate && (
+            <Badge variant="outline" className="bg-background/80 backdrop-blur-sm flex items-center gap-1 text-muted-foreground">
+              <Calendar className="h-3 w-3" />
+              {formattedDate}
+            </Badge>
+          )}
         </div>
         
-        {project.description && (
-          <p className="mt-2 text-sm text-muted-foreground">
-            {truncateText(project.description, 100)}
-          </p>
-        )}
-        
-        {project.technologies && project.technologies.length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-1">
-            {project.technologies.map((tech) => (
-              <span
-                key={tech}
-                className="inline-flex items-center rounded-full border border-border/40 px-2 py-0.5 text-xs font-medium text-muted-foreground"
-              >
-                {tech}
-              </span>
-            ))}
-          </div>
-        )}
-        
-        <div className="mt-4 pt-4 border-t border-border/40">
-          <Link
-            href={`/projects/${project.id}`}
-            className="text-sm font-medium text-primary hover:underline"
+        <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-background/20 to-transparent" />
+      </div>
+
+      {/* Project Content */}
+      <div className="relative p-6">
+        <h3 className="text-lg font-medium">{project.title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
+          {project.description}
+        </p>
+
+        {/* Technologies */}
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {project.technologies && project.technologies.map((tech) => (
+            <Badge
+              key={tech}
+              variant="secondary"
+              className="bg-muted/50 text-muted-foreground hover:bg-muted"
+            >
+              <Layers className="mr-1 h-3 w-3" />
+              {tech}
+            </Badge>
+          ))}
+        </div>
+
+        {/* Action Buttons */}
+        <div className="mt-6 flex items-center gap-2">
+          <Button
+            asChild
+            size="sm"
+            className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
           >
-            View Details
-          </Link>
+            <Link 
+              href={project.project_url || '#'} 
+              target="_blank"
+              className="flex items-center justify-center gap-1.5"
+            >
+              <span>Demo</span>
+              <ExternalLink className="h-3.5 w-3.5" />
+            </Link>
+          </Button>
+          {project.github_url && (
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="flex-1 border-border/50 hover:bg-muted/50"
+            >
+              <Link 
+                href={project.github_url} 
+                target="_blank"
+                className="flex items-center justify-center gap-1.5"
+              >
+                <Github className="h-3.5 w-3.5" />
+                <span>Kaynak</span>
+              </Link>
+            </Button>
+          )}
         </div>
       </div>
     </motion.div>
