@@ -1,52 +1,31 @@
 'use client';
  
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, MessageSquare, Send, MapPin, Phone, ExternalLink } from 'lucide-react';
-import { Button, Input, Textarea } from '../ui';
+import { Github, Linkedin, Mail, Send } from 'lucide-react';
+import { Button } from '../ui';
 import Link from 'next/link'; 
 
 const contactMethods = [
   {
-    name: 'E-posta',
-    href: 'mailto:your@email.com',
-    icon: Mail,
-    description: 'İş teklifleri ve projeler için iletişime geçin',
-    color: 'bg-blue-500/10 text-blue-500',
+    name: 'GitHub',
+    href: 'https://github.com/Burakesnglu',
+    icon: Github,
+    description: 'Projelerimi ve kaynak kodlarımı inceleyin',
+    color: 'bg-slate-700/10 text-slate-700 dark:bg-slate-300/10 dark:text-slate-300',
   },
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/yourusername',
+    href: 'https://www.linkedin.com/in/burakesnglu/',
     icon: Linkedin,
-    description: 'Profesyonel bağlantılar kurun',
-    color: 'bg-blue-600/10 text-blue-600',
+    description: 'Profesyonel profilimi ziyaret edin',
+    color: 'bg-blue-600/10 text-blue-600 dark:bg-blue-400/10 dark:text-blue-400',
   },
   {
-    name: 'GitHub',
-    href: 'https://github.com/yourusername',
-    icon: Github,
-    description: 'Açık kaynak projeler ve katkılar',
-    color: 'bg-slate-700/10 text-slate-700',
-  },
-];
-
-const additionalDetails = [
-  {
-    icon: MapPin,
-    label: 'Konum',
-    value: 'İstanbul, Türkiye',
-    color: 'text-rose-500',
-  },
-  {
-    icon: Phone,
-    label: 'Telefon',
-    value: '+90 (555) 123 4567',
-    color: 'text-emerald-500',
-  },
-  {
+    name: 'Email',
+    href: 'mailto:burakesngluu@gmail.com',
     icon: Mail,
-    label: 'E-posta',
-    value: 'your@email.com',
-    color: 'text-blue-500',
+    description: 'İş birlikleri ve projeler için iletişime geçin',
+    color: 'bg-blue-500/10 text-blue-500 dark:bg-blue-300/10 dark:text-blue-300',
   },
 ];
 
@@ -102,158 +81,90 @@ export default function Contact() {
           </p>
         </motion.div>
 
-        <div className="grid gap-10 lg:grid-cols-2">
-          {/* Contact Methods */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="space-y-6"
-          >
-            <div className="rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm shadow-sm p-6">
-              <h3 className="text-xl font-medium mb-6">İletişim Bilgileri</h3>
-              
-              <div className="space-y-6">
-                {additionalDetails.map((detail, index) => {
-                  const Icon = detail.icon;
-                  return (
-                    <div key={detail.label} className="flex items-start gap-4">
-                      <div className={`rounded-md p-2.5 ${detail.color} bg-muted/40`}>
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <div className="text-sm text-muted-foreground">{detail.label}</div>
-                        <div className="font-medium">{detail.value}</div>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-              
-              <div className="mt-8 border-t border-border/60 pt-6">
-                <h4 className="text-sm font-medium text-muted-foreground mb-4">Sosyal Medya</h4>
-                <div className="flex gap-4">
-                  {contactMethods.map((method) => {
-                    const Icon = method.icon;
-                    return (
-                      <motion.a
-                        key={method.name}
-                        href={method.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background hover:bg-muted/40 transition-colors"
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        title={method.name}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </motion.a>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-            
-            <div className="rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm shadow-sm p-6">
-              <h3 className="text-xl font-medium mb-4">İş Saatleri</h3>
-              <div className="space-y-2">
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-muted-foreground">Pazartesi - Cuma</span>
-                  <span className="font-medium">09:00 - 18:00</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-t border-border/40">
-                  <span className="text-muted-foreground">Cumartesi</span>
-                  <span className="font-medium">10:00 - 14:00</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-t border-border/40">
-                  <span className="text-muted-foreground">Pazar</span>
-                  <span className="font-medium">Kapalı</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm shadow-sm p-6"
-          >
-            <h3 className="text-xl font-medium mb-6">Mesaj Gönderin</h3>
-            <form className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">
-                    İsim
-                  </label>
-                  <Input id="name" placeholder="İsminiz" className="bg-background/50" />
-                </div>
-                <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
-                    E-posta
-                  </label>
-                  <Input id="email" placeholder="E-posta adresiniz" type="email" className="bg-background/50" />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium">
-                  Konu
-                </label>
-                <Input id="subject" placeholder="Mesajınızın konusu" className="bg-background/50" />
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">
-                  Mesaj
-                </label>
-                <Textarea 
-                  id="message" 
-                  placeholder="Nasıl yardımcı olabilirim?" 
-                  className="min-h-[120px] bg-background/50" 
-                />
-              </div>
-              
-              <Button 
-                type="submit"
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {contactMethods.map((method, index) => {
+            const Icon = method.icon;
+            return (
+              <motion.div
+                key={method.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="group relative"
               >
-                <Send className="mr-2 h-4 w-4" />
-                Mesaj Gönder
-              </Button>
-              
-              <p className="text-xs text-muted-foreground text-center mt-4">
-                Gönder butonuna tıklayarak, kişisel verilerinizin işlenmesini kabul etmiş olursunuz.
-              </p>
-            </form>
-          </motion.div>
+                <div className="relative overflow-hidden rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm p-8 transition-colors hover:bg-card/50 hover:border-border/60 shadow-sm">
+                  {/* Card Background Gradient */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+
+                  {/* Content */}
+                  <div className="relative">
+                    <div className={`mb-6 inline-block rounded-xl p-3 ${method.color}`}>
+                      <Icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-medium">{method.name}</h3>
+                    <p className="mt-2 text-muted-foreground">
+                      {method.description}
+                    </p>
+                    <div className="mt-6">
+                      <Button
+                        asChild
+                        variant="default"
+                        className="group/btn relative overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground"
+                      >
+                        <Link href={method.href} target="_blank" className="flex items-center gap-2">
+                          <span>Bağlantıya Git</span>
+                          <motion.div
+                            className="inline-block transition-transform group-hover/btn:translate-x-1"
+                            initial={false}
+                          >
+                            <Send className="h-4 w-4" />
+                          </motion.div>
+                        </Link>
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
         </div>
 
-        {/* Call to Action */}
+        {/* Direct Message Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
           viewport={{ once: true, margin: "-100px" }}
-          className="mt-16 rounded-lg border border-border/40 bg-gradient-to-r from-blue-500/5 to-purple-500/5 backdrop-blur-sm p-8 text-center"
+          className="mt-16 overflow-hidden rounded-lg border border-border/40 bg-card/30 backdrop-blur-sm shadow-sm"
         >
-          <h3 className="text-2xl font-medium mb-4">Freelance Çalışmayla İlgileniyor musunuz?</h3>
-          <p className="max-w-2xl mx-auto text-muted-foreground mb-6">
-            Kısa veya uzun vadeli projeleriniz için profesyonel çözümler üretebilirim. Hedeflerinize ulaşmak için hemen iletişime geçin.
-          </p>
-          <Button 
-            asChild
-            size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground"
-          >
-            <Link href="mailto:your@email.com" className="flex items-center gap-2">
-              <span>Hemen İletişime Geçin</span>
-              <ExternalLink className="h-4 w-4" />
-            </Link>
-          </Button>
+          <div className="relative p-8 md:p-12">
+            {/* Background Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-blue-500/5" />
+
+            {/* Content */}
+            <div className="relative flex flex-col items-center text-center">
+              <div className="mb-6 rounded-full bg-primary/10 p-3">
+                <Mail className="h-6 w-6 text-primary" />
+              </div>
+              <h3 className="text-2xl font-medium">Direkt Mesaj</h3>
+              <p className="mt-2 max-w-2xl text-muted-foreground">
+                Projeleriniz veya iş birliği fırsatları için benimle direkt
+                olarak iletişime geçebilirsiniz. Size en kısa sürede dönüş
+                yapacağım.
+              </p>
+              <Button
+                asChild
+                size="lg"
+                className="mt-8 bg-gradient-to-r from-purple-500/90 to-blue-500/90 hover:from-purple-600/90 hover:to-blue-600/90 text-white"
+              >
+                <Link href="mailto:your@email.com" className="flex items-center gap-2">
+                  <Mail className="h-4 w-4" />
+                  <span>E-posta Gönder</span>
+                </Link>
+              </Button>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

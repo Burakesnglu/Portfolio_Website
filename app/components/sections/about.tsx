@@ -38,28 +38,21 @@ const skills = [
 const experience = [
   {
     title: 'Frontend Developer',
-    company: 'Tech Company',
-    period: '2020 - Şimdi',
+    company: 'Logitrans Logistic',
+    period: '2021 - 2024',
     icon: Briefcase,
     color: 'bg-primary/10 text-primary',
-  },
+  }, 
   {
-    title: 'Web Developer',
-    company: 'Startup LLC',
-    period: '2018 - 2020',
-    icon: Users,
-    color: 'bg-blue-500/10 text-blue-500',
-  },
-  {
-    title: 'Computer Engineering',
+    title: 'Computer Programming',
     company: 'ABC Üniversitesi',
     period: '2014 - 2018',
     icon: GraduationCap,
     color: 'bg-purple-500/10 text-purple-500',
   },
   {
-    title: 'Best Web Developer',
-    company: 'XYZ Konferansı',
+    title: 'JavaScript Certificate',
+    company: 'Sololearn',
     period: '2022',
     icon: Award,
     color: 'bg-amber-500/10 text-amber-500',
@@ -169,8 +162,7 @@ export default function About() {
             </motion.div>
 
             {/* Experience Timeline */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-medium tracking-tight">Deneyim & Eğitim</h3>
+            <div className="space-y-4"> 
               <div className="space-y-4">
                 {experience.map((item, index) => {
                   const Icon = item.icon;
@@ -204,8 +196,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true, margin: "-100px" }}
             className="space-y-8"
-          >
-            <h3 className="text-xl font-medium tracking-tight">Uzmanlık Alanları</h3>
+          > 
             <div className="grid gap-4 sm:grid-cols-2">
               {skills.map((skill, index) => {
                 const Icon = skill.icon;
@@ -234,15 +225,17 @@ export default function About() {
             </div>
 
             {/* Technologies */}
-            <div className="space-y-4">
-              <h3 className="text-xl font-medium tracking-tight">Teknolojiler</h3>
+            <div className="space-y-4"> 
               <div className="flex flex-wrap gap-2">
                 {technologies.map((tech, index) => (
                   <motion.span
                     key={tech.name}
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    whileHover={{ y: -3, backgroundColor: "var(--muted)" }}
+                    whileHover={{ 
+                      y: -3,
+                      backgroundColor: "rgba(217, 217, 227, 0.12)" 
+                    }}
                     transition={{
                       duration: 0.3,
                       delay: 0.3 + index * 0.05,

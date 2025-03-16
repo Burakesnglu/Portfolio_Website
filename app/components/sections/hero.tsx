@@ -2,7 +2,7 @@
 
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui';
-import { ChevronDown, Github, Linkedin, Mail, Code2, Sparkles, ArrowRight, Brain, Server, Database, Layers, ExternalLink } from 'lucide-react';
+import { ChevronDown, Github, Linkedin, Mail, Code2, Sparkles, ArrowRight, Brain, Server, Database, Layers, ExternalLink, BookA } from 'lucide-react';
 import Link from 'next/link';
 import { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
@@ -10,17 +10,17 @@ import Image from 'next/image';
 const socialLinks = [
   {
     name: 'GitHub',
-    href: 'https://github.com/yourusername',
+    href: 'https://github.com/Burakesnglu',
     icon: Github,
   },
   {
     name: 'LinkedIn',
-    href: 'https://linkedin.com/in/yourusername',
+    href: 'https://www.linkedin.com/in/burakesnglu/',
     icon: Linkedin,
   },
   {
     name: 'Mail',
-    href: 'mailto:your@email.com',
+    href: 'mailto:burakesngluu@gmail.com',
     icon: Mail,
   },
 ];
@@ -249,8 +249,8 @@ export default function Hero() {
                     Frontend Developer
                   </div>
                   <div className="px-3 py-1 rounded-md bg-secondary/10 text-secondary font-medium inline-flex items-center">
-                    <Database className="w-4 h-4 mr-2" />
-                    Supabase Uzmanı
+                    <BookA className="w-4 h-4 mr-2" />
+                    Angular Expert
                   </div>
                 </div>
               </motion.div>
@@ -265,37 +265,7 @@ export default function Hero() {
                 Kullanıcı odaklı dijital deneyimler oluşturmak için modern teknolojileri kullanıyorum. 
                 Kurumsal seviyede ölçeklenebilir ve yüksek performanslı web uygulamaları geliştiriyorum.
               </motion.p>
-
-              {/* Technology Pills with subtle animation */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
-                className="flex flex-wrap gap-2"
-              >
-                <span className="text-sm font-medium text-muted-foreground mr-2 pt-1">Teknolojiler:</span>
-                {technologies.map((tech, index) => (
-                  <motion.div 
-                    key={tech.name}
-                    className={`px-3 py-1 rounded-md text-sm 
-                      ${activeIndex === index 
-                        ? 'bg-gradient-to-r ' + tech.color + ' text-white font-medium shadow-sm' 
-                        : 'bg-muted text-muted-foreground'}`}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ 
-                      opacity: 1, 
-                      scale: activeIndex === index ? 1.05 : 1,
-                      y: activeIndex === index ? -2 : 0
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <span className="flex items-center">
-                      <tech.icon className="w-3.5 h-3.5 mr-1.5" />
-                      {tech.name}
-                    </span>
-                  </motion.div>
-                ))}
-              </motion.div>
+ 
 
               {/* CTA Buttons with refined design */}
               <motion.div
