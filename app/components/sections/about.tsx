@@ -45,8 +45,8 @@ const experience = [
   }, 
   {
     title: 'Computer Programming',
-    company: 'ABC Üniversitesi',
-    period: '2014 - 2018',
+    company: 'Sakarya Üniversitesi',
+    period: '2019 - 2021',
     icon: GraduationCap,
     color: 'bg-purple-500/10 text-purple-500',
   },
@@ -142,7 +142,7 @@ export default function About() {
               className="relative overflow-hidden rounded-xl bg-card/30 backdrop-blur-sm border border-border/40 shadow-sm"
             >
               <div className="p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
-                <div className="relative w-32 h-32 sm:w-40 sm:h-40 overflow-hidden rounded-lg shadow-sm">
+                {/*<div className="relative w-32 h-32 sm:w-40 sm:h-40 overflow-hidden rounded-lg shadow-sm">
                   <Image
                     src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=2080&auto=format&fit=crop"
                     alt="Burak Esenoglu"
@@ -150,7 +150,7 @@ export default function About() {
                     objectFit="cover"
                     className="transition-transform duration-500 hover:scale-105"
                   />
-                </div>
+                </div> */}
                 <div className="text-center sm:text-left flex-1">
                   <h3 className="text-2xl font-semibold">Burak Esenoglu</h3>
                   <p className="text-primary font-medium">Senior Frontend Developer</p>

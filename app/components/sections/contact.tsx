@@ -158,7 +158,7 @@ export default function Contact() {
                 size="lg"
                 className="mt-8 bg-gradient-to-r from-purple-500/90 to-blue-500/90 hover:from-purple-600/90 hover:to-blue-600/90 text-white"
               >
-                <Link href="mailto:your@email.com" className="flex items-center gap-2">
+                <Link href="mailto:burakesngluu@gmail.com" className="flex items-center gap-2">
                   <Mail className="h-4 w-4" />
                   <span>E-posta Gönder</span>
                 </Link>

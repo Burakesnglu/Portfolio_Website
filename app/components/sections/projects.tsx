@@ -104,35 +104,7 @@ export default function Projects() {
             Modern teknolojiler kullanarak geliştirdiğim ve farklı sektörlerdeki ihtiyaçlara yönelik çözümler
           </p>
         </motion.div>
-
-        {/* Category filter */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          className="flex justify-center mb-12 overflow-x-auto pb-2"
-        >
-          <div className="inline-flex rounded-md shadow-sm border border-border/40 p-1 bg-card/30 backdrop-blur-sm">
-            {categories.map((cat, index) => (
-              <motion.button
-                key={cat.value}
-                onClick={() => setCategory(cat.value)}
-                className={`px-4 py-2 text-sm rounded-md font-medium transition-all
-                  ${category === cat.value 
-                    ? 'bg-primary text-white shadow-sm' 
-                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/40'}`}
-                whileHover={{ scale: category !== cat.value ? 1.05 : 1 }}
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.1 + index * 0.05 }}
-              >
-                {cat.name}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+ 
 
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {isLoading ? (
@@ -178,17 +150,7 @@ export default function Projects() {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true, margin: "-100px" }}
           className="mt-12 text-center"
-        >
-          <Button 
-            asChild
-            variant="outline" 
-            className="border-border/40 bg-card/20 backdrop-blur-sm hover:bg-card/40"
-          >
-            <Link href="/projects" className="flex items-center gap-2">
-              <span>Tüm Projeleri Görüntüle</span>
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+        > 
         </motion.div>
       </div>
     </section>
